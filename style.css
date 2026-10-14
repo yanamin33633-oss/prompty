@@ -137,3 +137,7 @@ footer{padding-block:30px 60px;text-align:center}
 .lb[hidden]{display:none}
 .lb img{max-width:100%;max-height:100%;border-radius:14px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.where{margin-top:10px;display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:13px;color:var(--ink-soft)}
+.where b{color:var(--slivo);margin-right:2px}
+.where a{background:var(--soft);border:1px solid var(--line);color:var(--slivo);font-weight:800;text-decoration:none;padding:5px 11px;border-radius:100px}
+.where a:hover{background:#EDE7FF}
