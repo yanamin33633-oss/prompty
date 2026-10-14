@@ -153,6 +153,7 @@ footer{padding-block:30px 60px;text-align:center}
   <p class="lead">Все промты для анимации и видео из моих роликов в одном месте. Ищи по номеру или слову, копируй одним нажатием.</p>
   <div class="tagline accent">Нашла номер → скопировала → вставила ✨</div>
   <nav class="pillrow">
+    <a class="pill " href="index.html">✨ Все промты</a>
     <a class="pill " href="foto.html">🖼 Фото промты</a>
     <a class="pill on" href="video.html">🎬 Видео промты</a>
     <a class="pill " href="tekst.html">✍️ Промты для текста</a>
@@ -164,7 +165,7 @@ footer{padding-block:30px 60px;text-align:center}
   <div class="tools">
     <label class="search">
       <span aria-hidden="true">🔎</span>
-      <input id="q" type="search" placeholder="Номер или слово: 12, портрет, книга…" autocomplete="off">
+      <input id="q" type="search" placeholder="Номер из видео или слово: 13, портрет, книга…" autocomplete="off">
       <span class="count" id="count"></span>
     </label>
     <div class="filters" id="filters"></div>
@@ -184,75 +185,16 @@ footer{padding-block:30px 60px;text-align:center}
 </footer>
 <div class="toast" id="toast">Промт скопирован ✓</div>
 
+<script src="prompts.js"></script>
 <script>
-/* ================================================================
-   ✏️  СЮДА ДОБАВЛЯЙ НОВЫЕ ПРОМТЫ
-   ----------------------------------------------------------------
-   • Новый промт дописывай В КОНЕЦ списка — номер поставится сам
-     (первый в списке = №1, второй = №2 и т.д.).
-   • Не удаляй и не переставляй старые, иначе сдвинутся номера.
-     Чтобы скрыть промт, поставь ему  hidden: true
-   • Ссылка на конкретный промт:  video.html#номер   (например video.html#7)
-   • Внутри текста промта не используй обратную кавычку  `
-   • img — картинка-пример (необязательно). Положи файл в папку
-     img рядом с этим файлом и напиши  img: "img/имя.webp"
-     Для видео можно указать  video: "img/имя.mp4"
-   • Ещё фото к тому же промту:  gallery: ["img/2.webp", "img/3.webp"]
-   • Пустые поля можно просто удалить.
-   ================================================================ */
-const PROMPTS = [
-  {
-    title: "Зум из космоса прямо к вам",
-    tool: "Gemini / Google Flow",
-    text: `Create a seamless ultra-cinematic zoom transition that begins in outer space with a photorealistic view of Planet Earth centered on Russia, with Moscow as the exact destination (use the first reference image).
+const PAGE_TYPE = "видео";
 
-The camera starts thousands of kilometers away, then performs a perfectly smooth, continuous, high-speed dolly zoom toward Moscow, Russia.
-
-As the camera rapidly descends through the atmosphere, reveal realistic cloud layers, atmospheric scattering, city lights fading into daylight, terrain, forests, rivers, highways, buildings, and streets with accurate geographical perspective and natural motion blur.
-
-The zoom continues without any cuts, precisely targeting Moscow, Russia, and then the exact location where the subject is standing.
-
-At the final moment, transition flawlessly into the second reference image, matching the camera angle, perspective, framing, lighting, and lens distortion so it feels like a single uninterrupted shot from outer space directly to the person.
-
-Preserve the subject’s exact identity, facial features, hairstyle, hair color, skin tone, clothing, accessories, body proportions, pose, facial expression, and overall appearance from the second reference image.
-
-Do not change, beautify, stylize, or reinterpret the subject’s appearance. Maintain maximum facial identity consistency and photorealism.
-
-The final frame must perfectly recreate the second reference photograph, preserving the original pose, camera angle, composition, environment, and perspective.
-
-Add realistic atmospheric haze, volumetric clouds, physically accurate lighting, cinematic HDR color grading, subtle lens breathing, motion blur during the rapid descent, and natural stabilization at the end.
-
-Ensure smooth camera acceleration and deceleration with zero jitter, zero teleporting, and perfect spatial continuity.
-
-Style: Hyper-realistic satellite imagery, Google Earth–quality terrain, Hollywood VFX, IMAX documentary, 8K detail, cinematic realism, physically based rendering, ultra-sharp textures, natural colors.
-
-Camera Movement: Continuous orbital space view → rapid forward dolly zoom toward Russia → atmospheric entry → aerial descent over Moscow → realistic city-level approach → precise camera angle alignment → perfect match to the final reference photograph.
-
-Duration: 5–8 seconds.
-
-Aspect Ratio: 9:16 vertical video, optimized for Instagram Reels.
-
-Negative Prompt: No cuts, no morphing, no identity change, no face modification, no artificial beauty filters, no fake buildings, no incorrect geography, no warped face, no duplicated limbs, no camera shake, no flickering, no AI artifacts, no frame jumps, no oversharpening, no unrealistic colors, no object deformation, no sudden transitions, no changes to the subject’s clothing or pose.`,
-    img: "img/c_zoom.webp",
-    gallery: ["img/p80.webp", "img/g80_400.webp"],
-    tip: "Прикрепи 2 фото: Землю (первое) и себя в нужной позе (второе). Город в промте можно заменить на свой.",
-  },
-  {
-    title: "Рыцарь: маленькая я и взрослая я",
-    tool: "Видео-нейросеть",
-    text: `The child is crying at the beginning. Use Image 1 as the young knight and Image 2 as the adult knight. Preserve both faces and ages. On a vast misty green battlefield, a tiny knight in silver armor struggles to hold an enormous sword upright. Strong wind blows the cape. An elegant adult knight in polished golden armor approaches, kneels gently, takes the heavy sword and gives the little knight a soft teddy bear. The child smiles with relief. Emotional cinematic storytelling, dramatic cloudy sky, soft orchestral music, realistic motion, vertical 9:16, 10 seconds, no text.`,
-    img: "img/c_knight.webp",
-    gallery: ["img/v_knight_child.webp", "img/v_knight_adult.webp"],
-    tip: "Порядок фото важен: первым — себя маленькую (или ребёнка), вторым — себя взрослую. Хотите другую игрушку — замените teddy bear на свою и приложите её фото третьим.",
-  },
-];
-/* ===================  ДАЛЬШЕ НИЧЕГО МЕНЯТЬ НЕ НУЖНО  =================== */
 
 const NEW_COUNT = 3;
 const CLIP = list => list.classList.contains('grid3') ? 160 : 600; // сколько последних промтов помечать «новый»
 const list = document.getElementById('list'), q = document.getElementById('q');
 const countEl = document.getElementById('count'), empty = document.getElementById('empty');
-const items = PROMPTS.map((p, i) => ({...p, n: i + 1})).filter(p => !p.hidden).reverse();
+const items = PROMPTS.map((p, i) => ({...p, n: i + 1})).filter(p => !p.hidden && (PAGE_TYPE === 'all' || p.type === PAGE_TYPE)).reverse();
 let tool = 'Все';
 
 function esc(s){return String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
@@ -329,7 +271,8 @@ list.addEventListener('click', e => {
 
 function focusHash(){
   const n = decodeURIComponent(location.hash.slice(1)); if (!n) return;
-  const el = document.getElementById(n); if (!el) return;
+  const el = document.getElementById(n);
+  if (!el) { if (PAGE_TYPE !== 'all' && /^\d+$/.test(n)) location.replace('index.html#' + n); return; }
   q.value = ''; tool = 'Все'; buildFilters(); apply();
   const go = () => el.scrollIntoView({block: 'start'}); go(); [400, 1200, 2500].forEach(t => setTimeout(go, t));
   el.querySelectorAll('img').forEach(i => i.loading = 'eager'); el.classList.add('hl'); setTimeout(() => el.classList.remove('hl'), 3200);

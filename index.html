@@ -1,7 +1,299 @@
 <!doctype html>
-<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Нейросети без воды — промты</title>
-<meta http-equiv="refresh" content="0; url=foto.html">
-<script>location.replace('foto.html' + location.hash)</script>
-</head><body style="font-family:system-ui;background:#F6F2FF;color:#3A3358;padding:40px">
-<a href="foto.html">Открыть библиотеку промтов</a></body></html>
+<style>
+:root{
+  color-scheme:light;
+  --lavender:#B7A6FF; --periwinkle:#7AA7FF; --pink:#FFB6D6;
+  --slivo:#6B5ACD; --ink:#3A3358; --ink-soft:#6C6690; --line:rgba(107,90,205,.14);
+  --card:#ffffff; --soft:#F4F0FF; --soft2:#FBF9FF;
+  --shadow:0 18px 50px -22px rgba(107,90,205,.45);
+  --radius:26px; --ok:#2E9E7A;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:150px}
+body{
+  font-family:'Segoe UI','Helvetica Neue',system-ui,Arial,sans-serif;color:var(--ink);
+  background:
+    radial-gradient(1100px 600px at 12% -5%,#E4DBFF 0%,transparent 55%),
+    radial-gradient(1000px 600px at 100% 8%,#DCEBFF 0%,transparent 50%),
+    radial-gradient(900px 700px at 50% 120%,#FFE6F0 0%,transparent 55%),
+    linear-gradient(180deg,#F6F2FF 0%,#FBF7FF 40%,#FFF7FA 100%);
+  background-color:#F6F2FF;background-attachment:fixed;
+  line-height:1.62;-webkit-font-smoothing:antialiased;font-size:16px;min-height:100vh;
+}
+.wrap{max-width:880px;margin:0 auto;padding-inline:22px;position:relative;z-index:1}
+.accent{font-family:'Segoe Script','Comic Sans MS',cursive}
+.blob{position:fixed;border-radius:50%;filter:blur(6px);opacity:.5;z-index:0;pointer-events:none}
+.b1{width:120px;height:120px;top:18%;left:4%;background:radial-gradient(circle at 35% 30%,#fff,#C7B8FF)}
+.b2{width:80px;height:80px;top:52%;right:5%;background:radial-gradient(circle at 35% 30%,#fff,#A7D0FF)}
+.b3{width:64px;height:64px;top:78%;left:8%;background:radial-gradient(circle at 35% 30%,#fff,#FFC7DF)}
+
+.hero{padding-block:56px 18px;text-align:center}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.75);border:1px solid var(--line);
+  color:var(--slivo);font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;padding:8px 16px;
+  border-radius:100px;box-shadow:var(--shadow);backdrop-filter:blur(8px)}
+h1{font-size:clamp(34px,6.5vw,60px);line-height:1.07;font-weight:800;margin:22px 0 10px;letter-spacing:-.02em;text-wrap:balance;
+  background:linear-gradient(120deg,#6B5ACD 0%,#7AA7FF 55%,#FF9EC7 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:clamp(16px,2.2vw,19px);color:var(--ink-soft);max-width:600px;margin:0 auto}
+.tagline{font-size:clamp(19px,3.2vw,26px);color:var(--slivo);margin-top:10px}
+
+.pillrow{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:24px}
+.pill{background:#fff;border:1px solid var(--line);border-radius:100px;padding:10px 18px;font-weight:700;font-size:14.5px;
+  color:var(--ink);text-decoration:none;box-shadow:0 8px 24px -14px rgba(107,90,205,.6);transition:transform .2s ease}
+.pill:hover{transform:translateY(-2px)}
+.pill.on{background:linear-gradient(120deg,#8E7BFF,#7AA7FF);color:#fff;border-color:transparent}
+.pill.tg{background:linear-gradient(120deg,#FF9EC7,#FFB6D6);color:#fff;border-color:transparent}
+
+.tools{position:sticky;top:0;z-index:5;padding:14px 0 12px;margin-top:22px;
+  background:linear-gradient(180deg,#F6F2FF 82%,rgba(246,242,255,0))}
+.search{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:100px;
+  padding:6px 8px 6px 20px;box-shadow:var(--shadow)}
+.search input{flex:1;min-width:0;border:0;outline:0;font:inherit;font-size:16px;color:var(--ink);background:transparent;padding:8px 0}
+.search input::placeholder{color:#A49FC2}
+.count{font-size:13px;font-weight:700;color:var(--slivo);background:var(--soft);padding:7px 14px;border-radius:100px;white-space:nowrap}
+.filters{display:flex;gap:8px;overflow-x:auto;padding:12px 2px 2px;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.fbtn{flex:0 0 auto;border:1px solid var(--line);background:#fff;color:var(--ink-soft);font:inherit;font-size:13.5px;font-weight:700;
+  padding:7px 14px;border-radius:100px;cursor:pointer}
+.fbtn.on{background:var(--slivo);color:#fff;border-color:var(--slivo)}
+
+.list{display:grid;gap:18px;padding:10px 0 20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);
+  min-width:0;transition:box-shadow .3s ease,transform .3s ease}
+.card.hl{box-shadow:0 0 0 3px var(--periwinkle),0 26px 60px -24px rgba(107,90,205,.6)}
+.top{display:flex;align-items:flex-start;gap:14px}
+.num{flex:0 0 auto;min-width:58px;height:58px;padding:0 10px;border-radius:18px;display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:21px;color:#fff;background:linear-gradient(140deg,#8E7BFF,#7AA7FF);box-shadow:var(--shadow);
+  font-variant-numeric:tabular-nums;text-decoration:none}
+.top > div{min-width:0;flex:1}
+.card h2{font-size:19px;font-weight:800;line-height:1.3;text-wrap:balance}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.tag{font-size:11.5px;font-weight:800;letter-spacing:.04em;padding:4px 11px;border-radius:100px;background:#F0ECFF;color:var(--slivo)}
+.tag.new{background:#E3F6EE;color:var(--ok)}
+.pic{margin-top:16px;border-radius:18px;overflow:hidden;background:var(--soft);border:1px solid var(--line)}
+.pic img{display:block;width:100%;height:auto;max-height:520px;object-fit:cover}
+.pic video{display:block;width:100%;max-height:520px;background:#000}
+.ptext{margin-top:16px;background:var(--soft2);border:1.5px dashed rgba(107,90,205,.3);border-radius:16px;padding:16px 18px;
+  font-family:ui-monospace,'Cascadia Mono',Consolas,monospace;font-size:14px;line-height:1.6;color:var(--ink);white-space:pre-wrap;word-break:break-word}
+.ptext.clip{max-height:230px;overflow:hidden;-webkit-mask-image:linear-gradient(180deg,#000 70%,transparent);mask-image:linear-gradient(180deg,#000 70%,transparent)}
+.more{margin-top:8px;background:none;border:0;color:var(--slivo);font:inherit;font-weight:800;font-size:14px;cursor:pointer;padding:4px 2px}
+.tip{margin-top:12px;font-size:14px;color:var(--ink-soft);background:linear-gradient(135deg,#FFF1F6,#F3EEFF);border-radius:14px;padding:11px 14px}
+.tip b{color:var(--slivo)}
+.acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:100px;border:0;cursor:pointer;
+  background:linear-gradient(120deg,#8E7BFF,#7AA7FF);color:#fff;font:inherit;font-weight:800;font-size:15px;text-decoration:none;
+  box-shadow:0 12px 26px -12px rgba(107,90,205,.85);transition:transform .2s ease}
+.btn:hover{transform:translateY(-2px)}
+.btn.ghost{background:#fff;color:var(--slivo);border:1px solid var(--line);box-shadow:none}
+.btn.done{background:linear-gradient(120deg,#2E9E7A,#5CC8A0)}
+.empty{text-align:center;color:var(--ink-soft);padding:40px 10px;display:none}
+
+footer{padding-block:30px 60px;text-align:center}
+.footbar{background:linear-gradient(120deg,#8E7BFF,#7AA7FF);border-radius:var(--radius);padding:32px 26px;color:#fff;box-shadow:var(--shadow)}
+.footbar .accent{font-size:24px;opacity:.95}
+.footbar h3{font-size:23px;font-weight:800;margin:6px 0 8px}
+.footbar p{opacity:.92;font-size:15px;max-width:520px;margin:0 auto 18px}
+.footbar .btn{background:#fff;color:var(--slivo)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);opacity:0;background:var(--ink);color:#fff;font-weight:700;
+  font-size:14px;padding:12px 20px;border-radius:100px;transition:.25s ease;z-index:20;pointer-events:none}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:600px){.wrap{padding-inline:16px}.card{padding:18px}.num{min-width:50px;height:50px;font-size:18px;border-radius:15px}
+  .btn{flex:1;padding:12px 14px}.btn.ghost{flex:0 0 auto}.btn .lg{display:none}}
+
+/* компактная сетка: по 3 карточки в ряд */
+.wide{max-width:1180px}
+.list.grid3{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch}
+.grid3 .card{display:flex;flex-direction:column;padding:16px;border-radius:22px}
+.grid3 .top{gap:10px}
+.grid3 .num{min-width:44px;height:44px;font-size:16px;border-radius:14px;padding:0 8px}
+.grid3 .card h2{font-size:15.5px;line-height:1.3}
+.grid3 .tags{margin-top:5px}
+.grid3 .pic{margin-top:12px;aspect-ratio:4/5;border-radius:14px;cursor:zoom-in;order:-1;margin:0 0 12px}
+.grid3 .pic img,.grid3 .pic video{width:100%;height:100%;max-height:none;object-fit:cover;object-position:top}
+.grid3 .ptext{margin-top:12px;font-size:12.5px;padding:12px 14px;border-radius:12px}
+.grid3 .ptext.clip{max-height:118px}
+.grid3 .tip{font-size:12.5px;padding:9px 12px;margin-top:10px}
+
+.grid3 .ptext:not(.clip){max-height:none}
+.grid3 .more{font-size:12.5px;align-self:flex-start}
+.grid3 .acts{margin-top:auto;padding-top:12px;gap:8px}
+.grid3 .btn{flex:1;padding:10px 12px;font-size:13.5px}
+.grid3 .btn.ghost{flex:0 0 auto}
+.grid3 .btn .lg{display:none}
+@media(max-width:900px){.list.grid3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.list.grid3{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .grid3 .card{padding:10px;border-radius:16px}.grid3 .num{min-width:36px;height:36px;font-size:13px;border-radius:11px}
+  .grid3 .top{flex-direction:column;gap:6px}.grid3 .card h2{font-size:13px}.grid3 .tags{display:none}.grid3 .ptext{display:none}.grid3 .ptext+.more{display:none}.grid3 .tip{display:none}
+  .grid3 .acts{flex-direction:column}.grid3 .btn{font-size:12.5px;padding:9px 8px}.grid3 .btn.ghost{display:none}}
+.grid3 .pic.ph{display:flex;align-items:center;justify-content:center;cursor:default;background:linear-gradient(140deg,#EDE7FF,#DCEBFF 60%,#FFE6F0)}
+.grid3 .pic.ph span{font-size:56px;font-weight:800;color:#fff;text-shadow:0 6px 24px rgba(107,90,205,.45)}
+.pic{position:relative}
+.pic[data-gal]{cursor:zoom-in}
+.cnt{position:absolute;right:8px;bottom:8px;background:rgba(40,34,70,.72);color:#fff;font-size:12px;font-weight:800;padding:4px 10px;border-radius:100px}
+.lbn{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;border:0;background:rgba(255,255,255,.9);color:var(--slivo);font-size:30px;line-height:1;cursor:pointer}
+.lbn.prev{left:max(12px, env(safe-area-inset-left, 0px))}.lbn.next{right:max(12px, env(safe-area-inset-right, 0px))}
+.lbn[hidden]{display:none}
+.lbc{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);color:#fff;font-weight:800;font-size:14px}
+.lb{position:fixed;inset:0;z-index:30;background:rgba(40,34,70,.86);display:flex;align-items:center;justify-content:center;padding:24px;cursor:zoom-out}
+.lb[hidden]{display:none}
+.lb img{max-width:100%;max-height:100%;border-radius:14px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+
+<header class="hero wrap">
+  <span class="eyebrow">✦ Библиотека промтов</span>
+  <h1>Все промты по номерам</h1>
+  <p class="lead">Промты из моих роликов и Telegram. Введи номер из видео в поиск или выбери раздел, жми «Скопировать» и вставляй в нейросеть.</p>
+  <div class="tagline accent">Нашла номер → скопировала → вставила ✨</div>
+  <nav class="pillrow">
+    <a class="pill on" href="index.html">✨ Все промты</a>
+    <a class="pill " href="foto.html">🖼 Фото промты</a>
+    <a class="pill " href="video.html">🎬 Видео промты</a>
+    <a class="pill " href="tekst.html">✍️ Промты для текста</a>
+    <a class="pill tg" href="https://t.me/ai_bez_vod" target="_blank" rel="noopener">✈️ Мой Telegram</a>
+  </nav>
+</header>
+
+<main class="wrap wide">
+  <div class="tools">
+    <label class="search">
+      <span aria-hidden="true">🔎</span>
+      <input id="q" type="search" placeholder="Номер из видео или слово: 13, портрет, книга…" autocomplete="off">
+      <span class="count" id="count"></span>
+    </label>
+    <div class="filters" id="filters"></div>
+  </div>
+  <div class="list grid3" id="list"></div>
+<div class="lb" id="lb" hidden><button class="lbn prev" aria-label="Назад">‹</button><img alt=""><button class="lbn next" aria-label="Дальше">›</button><span class="lbc"></span></div>
+  <p class="empty" id="empty">Ничего не нашлось 🙈 Попробуй другое слово или номер.</p>
+</main>
+
+<footer class="wrap">
+  <div class="footbar">
+    <div class="accent">новые промты каждую неделю</div>
+    <h3>Подпишись, чтобы не пропустить</h3>
+    <p>В Telegram выкладываю свежие промты, разборы нейросетей и фишки, которых нет в Instagram.</p>
+    <a class="btn" href="https://t.me/ai_bez_vod" target="_blank" rel="noopener">✈️ Перейти в Telegram</a>
+  </div>
+</footer>
+<div class="toast" id="toast">Промт скопирован ✓</div>
+
+<script src="prompts.js"></script>
+<script>
+const PAGE_TYPE = "all";
+
+
+const NEW_COUNT = 3;
+const CLIP = list => list.classList.contains('grid3') ? 160 : 600; // сколько последних промтов помечать «новый»
+const list = document.getElementById('list'), q = document.getElementById('q');
+const countEl = document.getElementById('count'), empty = document.getElementById('empty');
+const items = PROMPTS.map((p, i) => ({...p, n: i + 1})).filter(p => !p.hidden && (PAGE_TYPE === 'all' || p.type === PAGE_TYPE)).reverse();
+let tool = 'Все';
+
+function esc(s){return String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+function render(){
+  list.innerHTML = items.map(p => `
+    <article class="card" id="${p.n}" data-n="${p.n}" data-tool="${esc(p.tool)}"
+      data-s="${esc((p.n + ' ' + p.title + ' ' + (p.tool||'') + ' ' + (p.text||'') + ' ' + (p.tip||'')).toLowerCase())}">
+      <div class="top">
+        <a class="num" href="#${p.n}" title="Ссылка на этот промт">№${p.n}</a>
+        <div>
+          <h2>${esc(p.title)}</h2>
+          <div class="tags">
+            ${p.tool ? `<span class="tag">${esc(p.tool)}</span>` : ''}
+            ${p.n > PROMPTS.length - NEW_COUNT ? '<span class="tag new">новый</span>' : ''}
+          </div>
+        </div>
+      </div>
+      ${p.img ? `<div class="pic" data-gal="${esc([p.img, ...(p.gallery||[])].join('|'))}"><img src="${esc(p.img)}" alt="${esc(p.title)}" loading="lazy">${p.gallery && p.gallery.length ? `<span class="cnt">1 / ${p.gallery.length + 1}</span>` : ''}</div>` : ''}
+      ${!p.img && !p.video && list.classList.contains('grid3') ? `<div class="pic ph"><span>${p.n}</span></div>` : ''}
+      ${p.video ? `<div class="pic"><video src="${esc(p.video)}" controls muted playsinline preload="none"></video></div>` : ''}
+      <div class="ptext${p.text.length > CLIP(list) ? ' clip' : ''}">${esc(p.text)}</div>
+      ${p.text.length > CLIP(list) ? '<button class="more" data-more>▾ Показать промт полностью</button>' : ''}
+      ${p.tip ? `<div class="tip"><span><b>💡 Совет:</b> ${esc(p.tip)}</span></div>` : ''}
+      <div class="acts">
+        <button class="btn" data-copy="${p.n}">📋 Скопировать<span class="lg"> промт</span></button>
+        <button class="btn ghost" data-link="${p.n}">🔗 Ссылка</button>
+      </div>
+    </article>`).join('');
+}
+
+function buildFilters(){
+  const tools = ['Все', ...new Set(items.map(p => p.tool).filter(Boolean))];
+  const box = document.getElementById('filters');
+  if (tools.length < 3) { box.style.display = 'none'; return; }
+  box.innerHTML = tools.map(t => `<button class="fbtn${t === tool ? ' on' : ''}" data-t="${esc(t)}">${esc(t)}</button>`).join('');
+  box.onclick = e => { const b = e.target.closest('.fbtn'); if (!b) return; tool = b.dataset.t; buildFilters(); apply(); };
+}
+
+function apply(){
+  const s = q.value.trim().toLowerCase().replace(/^[№#]/, '');
+  let shown = 0;
+  list.querySelectorAll('.card').forEach(c => {
+    const okTool = tool === 'Все' || c.dataset.tool === tool;
+    const okText = !s || (/^\d+$/.test(s) ? c.dataset.n === s : c.dataset.s.includes(s));
+    c.hidden = !(okTool && okText); if (!c.hidden) shown++;
+  });
+  countEl.textContent = shown + ' из ' + items.length;
+  empty.style.display = shown ? 'none' : 'block';
+}
+
+function copy(text, msg){
+  const done = () => toast(msg);
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text).then(done, () => fallback(text, done));
+  } else fallback(text, done);
+}
+function fallback(text, cb){
+  const t = document.createElement('textarea'); t.value = text; t.style.position = 'fixed'; t.style.opacity = '0';
+  document.body.appendChild(t); t.select(); try { document.execCommand('copy'); } catch(e) {} t.remove(); cb();
+}
+let tt; function toast(m){const el=document.getElementById('toast');el.textContent=m;el.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>el.classList.remove('show'),1800);}
+
+list.addEventListener('click', e => {
+  const pi = e.target.closest('.pic[data-gal]');
+  if (pi) { openLb(pi.dataset.gal.split('|'), 0); return; }
+  const mo = e.target.closest('[data-more]');
+  if (mo) { const t = mo.previousElementSibling; const open = t.classList.toggle('clip'); mo.textContent = open ? '▾ Показать промт полностью' : '▴ Свернуть'; }
+  const c = e.target.closest('[data-copy]'), l = e.target.closest('[data-link]');
+  if (c) { const p = items.find(x => x.n == c.dataset.copy); copy(p.text, 'Промт №' + p.n + ' скопирован ✓');
+    c.classList.add('done'); c.textContent = '✓ Скопировано'; setTimeout(() => { c.classList.remove('done'); c.innerHTML = '📋 Скопировать<span class="lg"> промт</span>'; }, 1800); }
+  if (l) copy(location.href.split('#')[0] + '#' + l.dataset.link, 'Ссылка скопирована ✓');
+});
+
+function focusHash(){
+  const n = decodeURIComponent(location.hash.slice(1)); if (!n) return;
+  const el = document.getElementById(n);
+  if (!el) { if (PAGE_TYPE !== 'all' && /^\d+$/.test(n)) location.replace('index.html#' + n); return; }
+  q.value = ''; tool = 'Все'; buildFilters(); apply();
+  const go = () => el.scrollIntoView({block: 'start'}); go(); [400, 1200, 2500].forEach(t => setTimeout(go, t));
+  el.querySelectorAll('img').forEach(i => i.loading = 'eager'); el.classList.add('hl'); setTimeout(() => el.classList.remove('hl'), 3200);
+}
+
+render(); buildFilters(); apply();
+let gal = [], gi = 0;
+const lbEl = document.getElementById('lb');
+function showLb(){ lbEl.querySelector('img').src = gal[gi]; const many = gal.length > 1;
+  lbEl.querySelectorAll('.lbn').forEach(b => b.hidden = !many); lbEl.querySelector('.lbc').textContent = many ? (gi + 1) + ' / ' + gal.length : ''; }
+function openLb(list, i){ gal = list; gi = i; showLb(); lbEl.hidden = false; }
+function step(d){ gi = (gi + d + gal.length) % gal.length; showLb(); }
+lbEl.onclick = e => {
+  if (e.target.closest('.prev')) return step(-1);
+  if (e.target.closest('.next') || (e.target.tagName === 'IMG' && gal.length > 1)) return step(1);
+  lbEl.hidden = true; };
+document.addEventListener('keydown', e => { if (lbEl.hidden) return; if (e.key === 'ArrowRight') step(1); if (e.key === 'ArrowLeft') step(-1); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') document.getElementById('lb').hidden = true; });
+q.addEventListener('input', apply);
+window.addEventListener('hashchange', focusHash);
+window.addEventListener('load', focusHash);
+</script>
+</body>
+</html>
