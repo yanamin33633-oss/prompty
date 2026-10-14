@@ -29,6 +29,7 @@ function render(){
       <div class="ptext${p.text.length > CLIP(list) ? ' clip' : ''}">${esc(p.text)}</div>
       ${p.text.length > CLIP(list) ? '<button class="more" data-more>▾ Показать промт полностью</button>' : ''}
       ${p.tip ? `<div class="tip"><span><b>💡 Совет:</b> ${esc(p.tip)}</span></div>` : ''}
+      ${p.where && p.where.length ? `<div class="where"><b>🛠 Где сделать:</b> ${p.where.map(w => `<a href="${esc(w[1])}" target="_blank" rel="noopener">${esc(w[0])}</a>`).join('')}</div>` : ''}
       <div class="acts">
         <button class="btn" data-copy="${p.n}">📋 Скопировать<span class="lg"> промт</span></button>
         <button class="btn ghost" data-link="${p.n}">🔗 Ссылка</button>
