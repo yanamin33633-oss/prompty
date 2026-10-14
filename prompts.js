@@ -13,6 +13,7 @@
      img рядом с этим файлом и напиши  img: "img/имя.webp"
      Для видео можно указать  video: "img/имя.mp4"
    • Ещё фото к тому же промту:  gallery: ["img/2.webp", "img/3.webp"]
+   • Где сделать (кнопки-ссылки):  where: [["VeoSee бот", "https://..."], ["SYNTX", "https://..."]]
    • Пустые поля можно просто удалить.
    ================================================================ */
 const PROMPTS = [
@@ -1561,6 +1562,7 @@ Negative Prompt: No cuts, no morphing, no identity change, no face modification,
     img: "img/c_zoom.webp",
     gallery: ["img/p80.webp", "img/g80_400.webp"],
     tip: "Прикрепи 2 фото: Землю (первое) и себя в нужной позе (второе). Город в промте можно заменить на свой.",
+    where: [["VeoSee бот", "https://t.me/VeoSeeBot?start=tUcgGvVd"], ["SYNTX", "https://t.me/syntxaibot?start=aff_177818188"], ["AI-Seven", "https://telegram.me/Ai_Sevenbot?start=ref_177818188"]],
   },
   {
     type: "видео",
@@ -1570,5 +1572,6 @@ Negative Prompt: No cuts, no morphing, no identity change, no face modification,
     img: "knight.webp",
     gallery: ["img/c_knight.webp", "img/v_knight_child.webp", "img/v_knight_adult.webp"],
     tip: "Порядок фото важен: первым — себя маленькую (или ребёнка), вторым — себя взрослую. Хотите другую игрушку — замените teddy bear на свою и приложите её фото третьим.",
+    where: [["VeoSee бот", "https://t.me/VeoSeeBot?start=tUcgGvVd"], ["SYNTX", "https://t.me/syntxaibot?start=aff_177818188"], ["AI-Seven", "https://telegram.me/Ai_Sevenbot?start=ref_177818188"]],
   },
 ];
