@@ -1574,4 +1574,16 @@ Negative Prompt: No cuts, no morphing, no identity change, no face modification,
     tip: "Порядок фото важен: первым — себя маленькую (или ребёнка), вторым — себя взрослую. Хотите другую игрушку — замените teddy bear на свою и приложите её фото третьим.",
     where: [["VeoSee бот", "https://t.me/VeoSeeBot?start=tUcgGvVd"], ["SYNTX", "https://t.me/syntxaibot?start=aff_177818188"], ["AI-Seven", "https://telegram.me/Ai_Sevenbot?start=ref_177818188"]],
   },
+  {
+    type: "фото",
+    title: "Книга в одной картинке: инструменты, метафоры, бизнес",
+    tool: "ChatGPT",
+    text: `/booktoolkit — практические инструменты из книги: упражнения, вопросы, чек-листы
+/bookmetaphor — главные метафоры книги и что они значат для жизни
+/bookforbusiness — что из книги внедрить в бизнес: идеи, диагностика, план на 30 дней
+/visual — добавь перед командой, если ChatGPT ответил текстом, а не картинкой`,
+    img: "37_1.jpg",
+    gallery: ["37_2.jpg", "37_3.jpg"],
+    tip: "Команда + название книги и автор. Например: /visual /booktoolkit Кафе на краю земли, Джон Стрелеки",
+  },
 ];
