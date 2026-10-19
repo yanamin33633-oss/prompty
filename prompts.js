@@ -1586,4 +1586,29 @@ Negative Prompt: No cuts, no morphing, no identity change, no face modification,
     gallery: ["37_2.jpg", "37_3.jpg"],
     tip: "Команда + название книги и автор. Например: /visual /booktoolkit Кафе на краю земли, Джон Стрелеки",
   },
+  {
+    type: "видео",
+    title: "Маленькая я спасаю себя взрослую",
+    tool: "Видео-нейросеть",
+    text: `Create a 15-second ultra-realistic cinematic video in vertical 9:16 format, 4K quality.
+
+Use the uploaded reference photos to preserve the exact facial identity of the adult woman and her younger child self. The child is the younger version of the same woman. Keep both faces consistent throughout the entire video.
+
+0–3 seconds: A dramatic cinematic wide shot of a terrifying high cliff above a deep rocky abyss. An adult woman is hanging from the edge, desperately holding onto a rock with one hand. Strong wind blows her hair, small stones fall into the darkness below. Her face shows genuine fear and desperation. Dark storm clouds, thick mist, realistic atmosphere.
+
+3–6 seconds: A little girl, the woman’s younger self, runs toward the cliff edge. She recognizes the woman, looks terrified but determined, drops to her knees and reaches out her small hand. Emotional close-up of their faces and hands.
+
+6–10 seconds: The child grabs the woman’s hand and desperately tries to pull her up. The woman’s grip begins to slip, rocks crumble beneath them, the camera shakes subtly, creating intense suspense. The little girl uses all her strength, refusing to let go. Slow-motion close-up of their hands holding tightly.
+
+10–12 seconds: At the very last moment, the girl manages to pull the adult woman to safety. They both collapse onto the ground, breathing heavily, while small stones continue falling over the cliff edge.
+
+12–15 seconds: The adult woman realizes that the little girl who saved her is her own younger self. She embraces the child tightly, tears in her eyes, and gently kisses her forehead. The girl hugs her back. The storm clouds begin to part and soft golden sunlight illuminates them. A deeply emotional, healing final moment.
+
+Style: Photorealistic, cinematic masterpiece, dramatic natural lighting, emotional storytelling, realistic physics, believable movements, expressive faces, detailed skin textures, natural wind, realistic gravity, dynamic camera movement, shallow depth of field, dramatic atmosphere, seamless transitions, consistent characters, 4K.
+
+Avoid: Extra people, changing faces, distorted anatomy, bad hands, extra fingers, cartoon style, text, subtitles, logos, watermark.`,
+    img: "p38.webp",
+    tip: "Загрузи 2 фото: себя в детстве и себя сейчас, лицо крупно и при хорошем свете. В VeoSee боте можно просто загрузить эти два фото.",
+    where: [["VeoSee бот", "https://t.me/VeoSeeBot?start=tUcgGvVd"], ["SYNTX", "https://t.me/syntxaibot?start=aff_177818188"], ["AI-Seven", "https://telegram.me/Ai_Sevenbot?start=ref_177818188"]],
+  },
 ];
